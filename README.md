@@ -69,7 +69,7 @@ From the repo root:
 demo/writer-reviewer.sh demo/briefs/fix-login-401.md
 ```
 
-The script runs four steps and prints a banner for each:
+The script runs four steps. Each step starts with a header (step number, role, model); while an agent works you see a spinner, and when it finishes its answer is printed in its own box: the writer in blue, the reviewer in magenta. Add `VERBOSE=1` to stream the agents' raw output instead.
 
 | Step | Who | What happens |
 |---|---|---|
@@ -84,7 +84,7 @@ In our test run, the writer noticed that unknown usernames also returned 500 (wh
 
 ```bash
 git -C demo-app diff     # the full change
-cat .demo/review.md      # the reviewer's findings
+cat .demo/review.md      # the reviewer's findings (also .demo/writer-1.md, .demo/writer-2.md; raw logs in .demo/*.log)
 demo/reset.sh            # put demo-app back to the seeded bug, ready to run again
 ```
 
