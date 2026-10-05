@@ -78,7 +78,9 @@ The script runs four steps. Each step starts with a header (step number, role, m
 | 3/4 | Claude Code (writer) | Fixes the findings it agrees with, explains the rest, runs `npm run verify` again |
 | 4/4 | You | Read the diff: is this the right change, and is the design sound? |
 
-In our test run, the writer noticed that unknown usernames also returned 500 (which would reveal which usernames exist) and fixed that too. The reviewer then caught something subtler: unknown users got their answer faster than wrong passwords because they skipped the slow password hash, so response timing still leaked which usernames exist. The writer fixed that before any human looked.
+See [demo/sample-output.txt](demo/sample-output.txt) for the full output of a real run.
+
+In our test runs, the writer noticed that unknown usernames also returned 500 (which would reveal which usernames exist) and fixed that too. The reviewer then caught something subtler: unknown users got their answer faster than wrong passwords because they skipped the slow password hash, so response timing still leaked which usernames exist. The writer fixed that before any human looked.
 
 ### 5. Review, then reset
 
