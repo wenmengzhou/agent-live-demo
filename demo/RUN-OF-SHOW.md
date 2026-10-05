@@ -66,14 +66,14 @@ curl -i -X POST localhost:3000/login -d '{"username":"alice","password":"wrong"}
 |---|---|---|---|
 | 0:00 | Show the bug | the `curl` above | "A small, well-scoped bug. It passes all four questions." |
 | 0:45 | Show the workbench | `demo-app/CLAUDE.md`, `npm run verify` | "The agent reads this every time. One command checks everything." |
-| 1:15 | Show the brief | [demo/briefs/fix-login-401.md](briefs/fix-login-401.md) | "Notice 'Done when'. That's the agent's feedback loop." |
+| 1:15 | Show the brief | [demo/briefs/fix-login-401.md](briefs/fix-login-401.md) (the slide 12 brief) | "Notice 'Done when'. That's the agent's feedback loop." |
 | 1:45 | Start the run | `demo/writer-reviewer.sh demo/briefs/fix-login-401.md` | Narrate while it works; don't wait in silence |
 | 2:00 | Writer: code + tests | (step 1/4 output) | "It writes a failing test first, then the fix." |
 | 3:30 | Writer: deploy + E2E | `npm run verify` inside the run | "It doesn't stop at 'it compiles'. It deploys and runs end-to-end tests." |
 | 5:00 | Codex reviews | (step 2/4 output, `codex exec review`) | "Now Codex, a different model from a different company, reviews the diff. It has its own blind spots, so it catches what Claude missed." |
 | 6:00 | Writer fixes findings | (step 3/4 output) | |
 | 6:30 | Human review | `git -C demo-app diff` | "My job: is this the right change, and is the design sound?" |
-| 8:00 | Wrap up | `demo/reset.sh -y` afterwards | |
+| 8:00 | Back to slides | `demo/reset.sh -y` afterwards | |
 
 ## Variations
 
