@@ -3,254 +3,142 @@ Real output of: REVIEWER=claude demo/writer-reviewer.sh demo/briefs/fix-login-40
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
  STEP 1/4  ·  WRITER  ·  Claude Code
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 Implements the brief, adds tests, runs npm run verify (unit → deploy to test → E2E).
 
 ┌─ BRIEF ───────────────────────────────────────────────────────────────────────────────────────────
-
 │ Goal: POST /login must return 401 with `{"error":"invalid username or password"}` when the
-
 │ password is wrong. Today it returns 500.
-
 │ Context: `verifyPassword` in src/users.js throws an AuthError, and the /login handler in
-
 │ src/app.js does not handle it, so the generic handler turns it into a 500.
-
 │ Constraints: Keep the API paths and the success response unchanged. No new dependencies.
-
 │ Done when: A new unit test and a new E2E test reproduce the bug and now pass, and `npm run
-
 │ verify` passes.
-
 │ If unsure: Stop and ask. Don't guess.
-
 └───────────────────────────────────────────────────────────────────────────────────────────────────
 
   ✓ done in 34s
 
 ┌─ WRITER | Claude Code | result ───────────────────────────────────────────────────────────────────
-
 │ A wrong password on `POST /login` now returns 401 with `{"error":"invalid username or
-
 │ password"}` instead of 500. `npm run verify` passes, including the unit tests, the E2E tests
-
 │ and the test-environment stop.
-
 │
-
 │ - **Fix:** in `src/app.js`, the `/login` handler now catches `AuthError` and returns that 401.
-
 │ I imported `AuthError` for it. Paths and the success response are unchanged, and there are no
-
 │ new dependencies.
-
 │ - **Tests:** I added a unit test in `test/app.test.js` and an E2E test in
-
 │ `e2e/login-and-notes.e2e.test.js`. The unit test failed before the fix with the 500.
-
 │ - **Not run before the fix:** I didn't run the E2E test against the unfixed code.
-
 │
-
 │ **Unknown usernames still return 500.** `users.get` returns `undefined` for them, so
-
 │ `verifyPassword` crashes with a `TypeError` on `user.salt`, and the generic handler turns that
-
 │ into a 500. A wrong password now gives 401 and an unknown username gives 500, so a caller can
-
 │ tell whether a username exists. That conflicts with the rule in `CLAUDE.md` to never leak that.
-
 │ Fixing it is outside what you asked for, so I left it. The fix is small: treat a missing user
-
 │ as an `AuthError` in `/login` or `verifyPassword`, plus tests. Want me to do it?
-
 └───────────────────────────────────────────────────────────────────────────────────────────────────
 
 Files changed so far:
-
    demo-app/e2e/login-and-notes.e2e.test.js | 6 ++++++
-
    demo-app/src/app.js                      | 3 ++-
-
    demo-app/test/app.test.js                | 6 ++++++
-
    3 files changed, 14 insertions(+), 1 deletion(-)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
  STEP 2/4  ·  REVIEWER  ·  Claude Code (sonnet)
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 A different model reviews the diff against the brief. It does not edit code.
 
   ✓ done in 21s
 
 ┌─ REVIEWER | Claude Code (sonnet) | findings ──────────────────────────────────────────────────────
-
 │ **Blocking findings**
-
 │
-
 │ 1. **Blocking: unknown usernames still return 500, which leaks which usernames exist.**
-
 │    - **Where:** `src/app.js:41-42` and `src/users.js:25-26`.
-
 │    - **Problem:** `users.get(username)` returns `undefined` for an unknown user.
-
 │ `verifyPassword(undefined, …)` then throws a `TypeError` on `user.salt`. That is not an
-
 │ `AuthError`, so it is rethrown and becomes a 500.
-
 │    - **Effect:** A wrong password for `alice` now returns 401, but any other username returns
-
 │ 500. An attacker can tell valid usernames from invalid ones by the status code. That breaks the
-
 │ CLAUDE.md rule "Never leak whether a username exists". The brief's goal of "401 when the
-
 │ password is wrong" implies unknown users get the same response.
-
 │    - **Fix:** In `/login`, treat a missing user as an `AuthError`. Better, make
-
 │ `verifyPassword` handle `user === undefined`: hash against a dummy salt, so timing is similar,
-
 │ and then throw `AuthError`. Don't guess at this. If you want the unknown-user case left out of
-
 │ scope, ask the brief's owner.
-
 │
-
 │ 2. **Blocking: no test covers the unknown-user case.**
-
 │    - **Where:** `test/app.test.js` and `e2e/login-and-notes.e2e.test.js`.
-
 │    - **Problem:** Only the wrong-password case for `alice` is tested, so finding 1 passes
-
 │ unnoticed.
-
 │    - **Fix:** Add a unit test and an E2E test. Each should log in as `{username: 'nobody',
-
 │ password: 'x'}` and expect 401 with `{error: 'invalid username or password'}`. The body should
-
 │ be identical to the wrong-password body.
-
 │
-
 │ **Should fix**
-
 │
-
 │ 3. **Should fix: the 401 message is hard-coded in the handler (`src/app.js:48`).**
-
 │    - **Problem:** It ignores `err.message`. That is the correct choice, because the thrown
-
 │ message is `'wrong password'` and would leak the reason. It is easy for someone to "tidy" later.
-
 │    - **Fix:** Add a short comment saying the message is intentionally generic.
-
 │
-
 │ **Nits**
-
 │
-
 │ 4. **Nit: test coverage is otherwise adequate.**
-
 │    - Both new tests assert the status and the exact body.
-
 │    - The success path is unchanged and is covered by the existing tests.
-
 │    - No existing tests were weakened.
-
 │    - Scope is clean, with no unrelated changes.
-
 │
-
 │ **Not verified:** I read the code but did not run `npm run verify`. The tool prompted for
-
 │ approval on the compound command and I did not retry it. The brief's "done when" condition
-
 │ still needs a run. The new tests should pass, and findings 1 and 2 should be fixed first.
-
 └───────────────────────────────────────────────────────────────────────────────────────────────────
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
  STEP 3/4  ·  WRITER  ·  Claude Code
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 Fixes the findings it agrees with, explains the rest, runs npm run verify again.
 
   ✓ done in 24s
 
 ┌─ WRITER | Claude Code | response to review ───────────────────────────────────────────────────────
-
 │ I agreed with all three findings and fixed them. `npm run verify` passes: unit tests, E2E (4 of
-
 │ 4) and the test-environment stop all succeeded. I only saw the tail of the output, so I didn't
-
 │ check the unit-test counts.
-
 │
-
 │ - **Finding 1, unknown users returned 500:** `verifyPassword` in `src/users.js` now accepts an
-
 │ unknown user. It hashes against a dummy salt, so the work is the same as for a real user. It
-
 │ then throws `AuthError`, so the handler returns the same 401 either way.
-
 │ - **Finding 2, no test for unknown users:** I added a unit test and an E2E test. Both log in as
-
 │ `nobody`/`x` and expect 401 with `{error: 'invalid username or password'}`. The unit test also
-
 │ checks that the body equals the wrong-password body.
-
 │ - **Finding 3, the generic message:** I added a comment in `src/app.js` saying the 401 message
-
 │ is generic on purpose.
-
 │ - **Finding 4:** The reviewer raised it as a nit and asked for no change, so I made none.
-
 │
-
 │ I didn't confirm that the new unknown-user tests fail without the fix. Without it the
-
 │ unknown-user request hits a `TypeError`, which becomes a 500, so they should fail.
-
 └───────────────────────────────────────────────────────────────────────────────────────────────────
 
 Files changed so far:
-
    demo-app/e2e/login-and-notes.e2e.test.js | 12 ++++++++++++
-
    demo-app/src/app.js                      |  4 +++-
-
    demo-app/src/users.js                    | 10 +++++++---
-
    demo-app/test/app.test.js                | 13 +++++++++++++
-
    4 files changed, 35 insertions(+), 4 deletions(-)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
  STEP 4/4  ·  HUMAN  ·  you
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 The agents are done. Only you can judge: is this the right change, and is the design sound?
 
   Full diff:       git -C demo-app diff
-
   Each step:       .demo/writer-1.md   .demo/review.md   .demo/writer-2.md
-
   Raw agent logs:  .demo/*.log
-
   Ship it:         git checkout -b fix/login-401 && git commit -am "..."   (then open a PR)
-
   Throw it away:   demo/reset.sh
 
