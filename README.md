@@ -2,9 +2,7 @@
 
 [![ci](https://github.com/wenmengzhou/agent-live-demo/actions/workflows/ci.yml/badge.svg)](https://github.com/wenmengzhou/agent-live-demo/actions/workflows/ci.yml)
 
-Companion repo for the talk by zhouwenmeng (October 2026) on using coding agents day to day: when to hand work to an agent, how to brief one, how several agents work together, and how to choose a model.
-
-It has two halves:
+This repo has two halves:
 
 - **The ideas**, written up so you can use them without the slides: [talk/](talk) and [playbook/](playbook).
 - **Something to run**: a tiny app with a seeded bug, scripts for the multi-agent patterns, and a harness that measures models on your own tasks.

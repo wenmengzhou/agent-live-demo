@@ -1,6 +1,6 @@
 # notes-api
 
-The demo target for the talk: a tiny JSON API with login and notes, zero dependencies, Node 20+.
+The live-demo target: a tiny JSON API with login and notes, zero dependencies, Node 20+.
 
 ```bash
 npm start          # http://localhost:3000

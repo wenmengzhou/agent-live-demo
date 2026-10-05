@@ -1,6 +1,6 @@
 # eval: choose a model on your own tasks
 
-The talk's model-selection method, step 4: run candidate models on a test set of your own tasks and measure accuracy. This folder is a small working version of that.
+The model-selection method from [playbook/05](../playbook/05-choosing-a-model.md), step 4: run candidate models on a test set of your own tasks and measure accuracy. This folder is a small working version of that.
 
 ## How it works
 

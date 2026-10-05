@@ -2,7 +2,7 @@
 
 About 8 minutes. One small, well-scoped bug goes from a written brief to a reviewed, tested change, with the human only at the start and the end. It shows the single-agent loop (code → deploy to test → E2E) and pattern 3 (writer + reviewer).
 
-## Before the talk
+## Before the demo
 
 - [ ] `git clone https://github.com/wenmengzhou/agent-live-demo.git && cd agent-live-demo`; Node 20+; `cd demo-app && npm run verify` passes (no install step, zero dependencies).
 - [ ] Claude Code installed and logged in (`claude -p "hi"` answers).

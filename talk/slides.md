@@ -1,6 +1,6 @@
 # Coding First, Work Next, AGI Ahead
 
-Slide-by-slide outline of the talk (October 6, 2026; 30 minutes plus 30 minutes of Q&A), with a link to where each idea lives in this repo.
+Slide-by-slide outline, with a link to where each idea lives in this repo.
 
 The title is the story: in coding, agents have already proven themselves; in everyday work, teams are trying them now; the direction after that is AGI. So the useful question isn't whether AI can write code. It's which work to hand to an agent, and how.
 
