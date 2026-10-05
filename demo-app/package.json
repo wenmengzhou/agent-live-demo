@@ -1,0 +1,18 @@
+{
+  "name": "notes-api",
+  "version": "1.0.0",
+  "description": "A tiny notes API used as the live-demo target for the talk. Zero dependencies.",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test \"test/**/*.test.js\"",
+    "deploy:test": "node scripts/deploy-test.js up",
+    "deploy:stop": "node scripts/deploy-test.js down",
+    "e2e": "node --test \"e2e/**/*.test.js\"",
+    "verify": "node scripts/verify.js"
+  }
+}
