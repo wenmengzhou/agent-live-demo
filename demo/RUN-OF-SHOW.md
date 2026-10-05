@@ -4,7 +4,7 @@ About 8 minutes. One small, well-scoped bug goes from a written brief to a revie
 
 ## Before the talk
 
-- [ ] `git clone` this repo; Node 20+; `cd demo-app && npm run verify` passes (no install step, zero dependencies).
+- [ ] `git clone https://github.com/wenmengzhou/agent-live-demo.git && cd agent-live-demo`; Node 20+; `cd demo-app && npm run verify` passes (no install step, zero dependencies).
 - [ ] Claude Code installed and logged in (`claude -p "hi"` answers).
 - [ ] Codex installed and logged in for the review step (see [Codex as the reviewer](#codex-as-the-reviewer)).
 - [ ] Do a full dry run, then `demo/reset.sh -y`.

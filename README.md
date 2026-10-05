@@ -1,6 +1,8 @@
 # Coding First, Work Next, AGI Ahead
 
-Companion repo for the talk on using coding agents day to day: when to hand work to an agent, how to brief one, how several agents work together, and how to choose a model.
+[![ci](https://github.com/wenmengzhou/agent-live-demo/actions/workflows/ci.yml/badge.svg)](https://github.com/wenmengzhou/agent-live-demo/actions/workflows/ci.yml)
+
+Companion repo for the talk by zhouwenmeng (October 2026) on using coding agents day to day: when to hand work to an agent, how to brief one, how several agents work together, and how to choose a model.
 
 It has two halves:
 
@@ -9,10 +11,11 @@ It has two halves:
 
 ## Try it in two minutes
 
-You need Node 20+ and [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Nothing to install: the demo has zero dependencies.
+You need Node 20+ and [Claude Code](https://docs.anthropic.com/en/docs/claude-code), logged in. There is no `npm install` step: the demo has zero dependencies.
 
 ```bash
-git clone <this repo> && cd <repo>
+git clone https://github.com/wenmengzhou/agent-live-demo.git
+cd agent-live-demo
 
 # 1. The workbench: one command runs unit tests, deploys to a local "test env", and runs E2E tests
 cd demo-app && npm run verify && cd ..
@@ -27,7 +30,7 @@ node eval/run.js --models opus,sonnet,haiku
 demo/reset.sh
 ```
 
-Codex is optional. If it's installed, it becomes the reviewer in step 2 and the next agent in a handoff; otherwise Claude on a different model plays that role.
+For the writer + reviewer pattern with two different vendors, also install [Codex](https://github.com/openai/codex) (`npm install -g @openai/codex && codex login`). When it's on your PATH, Codex reviews in step 2 and takes over in a handoff; without it, Claude on a different model plays that role. Details: [demo/RUN-OF-SHOW.md](demo/RUN-OF-SHOW.md#codex-as-the-reviewer).
 
 ## What's here
 
