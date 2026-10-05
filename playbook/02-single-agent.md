@@ -39,4 +39,4 @@ All four help new human teammates too.
 4. **E2E:** it runs end-to-end tests against the deployed build. Failures loop back to step 2.
 5. **PR:** it opens a pull request with the test results attached.
 
-The agent doesn't stop at "it compiles". By the time you review, the question isn't "does this even work?" but "is this the right design?" The [live demo](../demo/RUN-OF-SHOW.md) runs exactly this loop on `demo-app/`.
+The agent doesn't stop at "it compiles". By the time you review, the question isn't "does this even work?" but "is this the right design?" The [live demo](../README.md#run-the-live-demo) runs exactly this loop on `demo-app/`.

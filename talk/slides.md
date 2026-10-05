@@ -32,7 +32,7 @@ The title is the story: in coding, agents have already proven themselves; in eve
 | 12 | Brief the agent like a new teammate | Goal, context, constraints, done when, if unsure | [brief template](../playbook/brief-template.md), [demo brief](../demo/briefs/fix-login-401.md) |
 | 13 | Set up the agent's workbench | Instructions file, one-command verification, permissions, tools | [demo-app/CLAUDE.md](../demo-app/CLAUDE.md), `npm run verify` |
 | 14 | CLI, MCP, skills | Use a CLI if one exists, add MCP where there is none, write a skill for anything your team repeats | [playbook/03](../playbook/03-cli-mcp-skills.md), [skill](../demo-app/.claude/skills/deploy-to-test/SKILL.md) |
-| 15 | Example: from code change to tested build | Brief → code → deploy to test → E2E → PR | **[live demo](../demo/RUN-OF-SHOW.md)** |
+| 15 | Example: from code change to tested build | Brief → code → deploy to test → E2E → PR | **[live demo](../README.md#run-the-live-demo)** |
 | 16 | Why more than one agent: four patterns | Fan-out, orchestrator, writer + reviewer, relay handoff | [playbook/04](../playbook/04-multi-agent.md) |
 | 17 | Writer + reviewer in team code review | A different model reviews; humans own design and approval | [demo/writer-reviewer.sh](../demo/writer-reviewer.sh) |
 | 18 | Relay handoff | Pass the baton, not the mess | [demo/handoff.sh](../demo/handoff.sh), [template](../playbook/handoff-template.md) |
