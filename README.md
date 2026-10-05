@@ -6,7 +6,7 @@ Companion repo for the talk by zhouwenmeng (October 2026) on using coding agents
 
 It has two halves:
 
-- **The ideas**, written up so you can use them without the slides: [talk/](talk) and [playbook/](playbook).
+- **The ideas**, written up as a practical playbook: [playbook/](playbook).
 - **Something to run**: a tiny app with a seeded bug, scripts for the multi-agent patterns, and a harness that measures models on your own tasks.
 
 ## Try it in two minutes
@@ -34,23 +34,22 @@ For the writer + reviewer pattern with two different vendors, also install [Code
 
 ## What's here
 
-| Folder | What it is | Slides |
-|---|---|---|
-| [talk/slides.md](talk/slides.md) | Slide-by-slide outline, with links into this repo | all |
-| [playbook/01-where-agents-fit.md](playbook/01-where-agents-fit.md) | What an agent is, the four questions, the scenario map, where the gains are | 5–9 |
-| [playbook/02-single-agent.md](playbook/02-single-agent.md) | Pairing vs. async, the six-step loop, the workbench | 10–13, 15 |
-| [playbook/brief-template.md](playbook/brief-template.md) | The brief template, vague vs. clear | 12 |
-| [playbook/03-cli-mcp-skills.md](playbook/03-cli-mcp-skills.md) | Connecting agents to your tools | 14 |
-| [playbook/04-multi-agent.md](playbook/04-multi-agent.md) | Four patterns and their cost | 16–19 |
-| [playbook/handoff-template.md](playbook/handoff-template.md) | The handoff note for relay handoffs | 18 |
-| [playbook/05-choosing-a-model.md](playbook/05-choosing-a-model.md) | Model tiers, and "step down until it breaks" | 23–24 |
-| [playbook/06-team-adoption.md](playbook/06-team-adoption.md) | Adoption challenges, a 10-person playbook, beyond code, guardrails | 20–22 |
-| [talk/faq.md](talk/faq.md) | Common questions and answers | Q&A |
-| [demo-app/](demo-app) | `notes-api`: a tiny login + notes API with a seeded bug, `CLAUDE.md`, `AGENTS.md`, a skill, one-command verification | 13–15 |
-| [demo/](demo) | [Run of show](demo/RUN-OF-SHOW.md), briefs, `writer-reviewer.sh`, `handoff.sh`, `reset.sh`, prompts | 15, 17, 18 |
-| [eval/](eval) | Model-selection harness: briefs + hidden tests + reference solutions | 24 |
+| Folder | What it is |
+|---|---|
+| [playbook/01-where-agents-fit.md](playbook/01-where-agents-fit.md) | What an agent is, the four questions, the scenario map, where the gains are |
+| [playbook/02-single-agent.md](playbook/02-single-agent.md) | Pairing vs. async, the six-step loop, the workbench |
+| [playbook/brief-template.md](playbook/brief-template.md) | The brief template, vague vs. clear |
+| [playbook/03-cli-mcp-skills.md](playbook/03-cli-mcp-skills.md) | Connecting agents to your tools |
+| [playbook/04-multi-agent.md](playbook/04-multi-agent.md) | Four patterns and their cost |
+| [playbook/handoff-template.md](playbook/handoff-template.md) | The handoff note for relay handoffs |
+| [playbook/05-choosing-a-model.md](playbook/05-choosing-a-model.md) | Model tiers, and "step down until it breaks" |
+| [playbook/06-team-adoption.md](playbook/06-team-adoption.md) | Adoption challenges, a 10-person playbook, beyond code, guardrails |
+| [playbook/faq.md](playbook/faq.md) | Common questions and answers |
+| [demo-app/](demo-app) | `notes-api`: a tiny login + notes API with a seeded bug, `CLAUDE.md`, `AGENTS.md`, a skill, one-command verification |
+| [demo/](demo) | [Run of show](demo/RUN-OF-SHOW.md), briefs, `writer-reviewer.sh`, `handoff.sh`, `reset.sh`, prompts |
+| [eval/](eval) | Model-selection harness: briefs + hidden tests + reference solutions |
 
-## The one-slide version
+## In one paragraph
 
 Ask four questions before you hand off a task: **Is the goal clear? Can it be verified? Is the context there? Is a mistake cheap?** Four yeses: hand it off. Any no: a human covers that gap.
 
